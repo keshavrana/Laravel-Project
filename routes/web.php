@@ -33,3 +33,4 @@ Route::get('sign-in/google',[LoginController::class,'google']);
 Route::get('sign-in/google/redirect',[LoginController::class,'googleRedirect']);
 
 Route::get('/userdashboard',[UserController::class,'index']);
+Route::get('/adduser',[UserController::class,'addUser']);
