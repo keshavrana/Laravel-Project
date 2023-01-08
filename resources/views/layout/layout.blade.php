@@ -357,6 +357,16 @@
                                 <li><a href="/userlist">Component List</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <i class="mdi mdi-format-underline"></i>
+                                <span> Laravel Collective </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="/collectiveform">Collective Form</a></li>
+                            </ul>
+                        </li>
 
                         <li class="menu-title mt-2">Components</li>
 

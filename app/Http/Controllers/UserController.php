@@ -68,4 +68,8 @@ class UserController extends Controller
             dd("Kuch to gadbad hai daya");
         }
     }
+
+    public function collectiveform(){
+        return view('user.collectiveform');
+    }
 }

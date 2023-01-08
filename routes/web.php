@@ -38,3 +38,5 @@ Route::post('/addnewuser',[UserController::class,'addnewuser']);
 Route::get('/user/edit/{id}',[UserController::class,'userEdit'])->name('user.edit');
 Route::post('/updateuser/{id}',[UserController::class,'updateUser']);
 Route::get('/userlist',[UserController::class,'userlist']);
+
+Route::get('/collectiveform',[UserController::class,'collectiveform']);
