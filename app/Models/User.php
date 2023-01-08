@@ -41,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Mutator : When inserting data into database and we want to perform some modification
+    public function setNameAttribute($val){
+        $this->attributes['name'] = ucwords($val);
+    }
+    // Accessor : When we get data from table and chenage some field to another format. 
+    public function getCreatedAtAttribute($val){
+        return date("d-M-Y",strtotime($val));
+    }
 }
