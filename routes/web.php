@@ -34,3 +34,7 @@ Route::get('sign-in/google/redirect',[LoginController::class,'googleRedirect']);
 
 Route::get('/userdashboard',[UserController::class,'index']);
 Route::get('/adduser',[UserController::class,'addUser']);
+Route::post('/addnewuser',[UserController::class,'addnewuser']);
+Route::get('/user/edit/{id}',[UserController::class,'userEdit'])->name('user.edit');
+Route::post('/updateuser/{id}',[UserController::class,'updateUser']);
+Route::get('/userlist',[UserController::class,'userlist']);
