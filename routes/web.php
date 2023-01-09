@@ -32,7 +32,7 @@ Route::get('sign-in/github/redirect',[LoginController::class,'githubRedirect']);
 Route::get('sign-in/google',[LoginController::class,'google']);
 Route::get('sign-in/google/redirect',[LoginController::class,'googleRedirect']);
 
-Route::get('/userdashboard',[UserController::class,'index']);
+Route::get('/userdashboard/{lang?}',[UserController::class,'index']);
 Route::get('/adduser',[UserController::class,'addUser']);
 Route::post('/addnewuser',[UserController::class,'addnewuser']);
 Route::get('/user/edit/{id}',[UserController::class,'userEdit'])->name('user.edit');

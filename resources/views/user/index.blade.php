@@ -4,7 +4,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card-box tilebox-one">
                 <i class="icon-layers float-right m-0 h2 text-muted"></i>
-                <h6 class="text-muted text-uppercase mt-0">Orders</h6>
+                <h6 class="text-muted text-uppercase mt-0">@lang('lang.order')</h6>
                 <h3 class="my-3" data-plugin="counterup">1,587</h3>
                 <span class="badge badge-success mr-1"> +11% </span> <span class="text-muted">From previous period</span>
             </div>

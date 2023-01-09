@@ -48,36 +48,28 @@
 
                 <li class="dropdown notification-list dropdown d-none d-lg-inline-block ml-2">
                     <a class="nav-link dropdown-toggle mr-0 waves-effect waves-light" data-toggle="dropdown"
-                        href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="{{ asset('assets/images/flags/us.jpg') }}" alt="lang-image" height="12">
+                        href="/userdashboard" role="button" aria-haspopup="false" aria-expanded="false">
+                        <span class="align-middle">Language</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{ asset('assets/images/flags/germany.jpg') }}" alt="lang-image" class="mr-1"
-                                height="12"> <span class="align-middle">German</span>
+                        <a href="/userdashboard/en" class="dropdown-item notify-item">
+                            <span class="align-middle">English</span>
                         </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{ asset('assets/images/flags/italy.jpg') }}" alt="lang-image" class="mr-1"
-                                height="12"> <span class="align-middle">Italian</span>
+                        <a href="/userdashboard/hi" class="dropdown-item notify-item">
+                            <span class="align-middle">Hindi</span>
                         </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{ asset('assets/images/flags/spain.jpg') }}" alt="lang-image" class="mr-1"
-                                height="12"> <span class="align-middle">Spanish</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="lang-image" class="mr-1"
-                                height="12"> <span class="align-middle">Russian</span>
-                        </a>
-
                     </div>
                 </li>
+                <select onchange="window.location.href=this.options[this.selectedIndex].value;">
+                    <option value="{{ url('/userdashboard') }}">Language</option>
+                    @php
+                        $lan = session()->get('lang');
+                        
+                    @endphp
+                    <option value="{{ url('/userdashboard/hi') }}" {{$lan == 'hi' ? 'selected' : ''}}>Hindi</option>
+                    <option value="{{ url('/userdashboard/en') }}" {{$lan == 'en' ? 'selected' : ''}}>English</option>
+                </select>
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle  waves-effect waves-light" data-toggle="dropdown" href="#"
@@ -405,7 +397,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div id="pagetitle" class="page-title-box">
-                                <h4 class="page-title">Dark Sidebar</h4>
+                                <h4 class="page-title">@lang('lang.header')</h4>
                             </div>
                         </div>
                     </div>

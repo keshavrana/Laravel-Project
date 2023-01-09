@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request,$lang = null)
     {
-        return view('user.index');
+        if($lang == 'hi' || $lang == 'en' || $lang == null){
+            App::setLocale($lang);
+            $request->session()->put('lang',$lang);
+            return view('user.index');
+        }
+        else{
+            $request->session()->forget('lang');
+            return view('user.index');
+        }
+        
     }
     public function addUser()
     {
