@@ -35,6 +35,12 @@
                                             </a>
                                         </div>
                                         <h5 class="text-muted text-uppercase py-3 font-16">Sign In</h5>
+                                        @if(Session::has('message'))
+                                            <span class="text-danger">{{Session::get('message')}}</span>
+                                        @endif
+                                        @if(Session::has('success'))
+                                            <span class="text-success">{{Session::get('success')}}</span>
+                                        @endif
                                     </div>
     
                                     <form action="/login" method="post" class="mt-2">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Register;
+use App\Models\LoginLog;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -77,15 +79,85 @@ class LoginController extends Controller
     {
         $validate = $request->validate([
             'email' => 'required',
-            'password' => 'required',
-            'captcha' => 'required|captcha'
+            'password' => 'required'
+            // 'captcha' => 'required|captcha'
         ]);
+        $ip = $request->getClientIp();
         $email = $request->email;
+        //Check Time;
+        $check = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
+        if(count($check) == 3){
+        $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->orderBy('created_at','desc')->first();
+        $last_time = date('Y-m-d H:s:i',strtotime($total_attempt->created_at));
+
+        $now_time = date('Y-m-d H:s:i',strtotime(Carbon::now()));
+
+        $to = Carbon::createFromFormat('Y-m-d H:s:i', $last_time);
+        $from = Carbon::createFromFormat('Y-m-d H:s:i', $now_time);
+  
+        $diff_in_hours = $to->diffInMinutes($from);
+
+        //dd($diff_in_hours);
+        if($diff_in_hours >= 3){
+            $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
+            $count = count($total_attempt);
+            for ($i=0; $i < $count ; $i++) { 
+                $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->delete();
+            }
+            return redirect()->back()->with('success', 'Your Account Has Been UnBlocked Now');
+        }
+        else{
+            $wait = 3 - $diff_in_hours;
+            return redirect()->back()->with('message', 'Your Account Bloked Kindly Wait For '.$wait.' Minute ');
+        }
+
+    }
+               
+      
+
+
+
+
+
+
+       
         $password = Register::where('email', $email)->first();
         if (Hash::check($request->password, $password->password)) {
-            return redirect('/userdashboard');
+            $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
+            $count = count($total_attempt);
+            if($count == 3){
+                return redirect()->back()->with('message', 'Your Account Bloked Kindly Wait');
+            }else{
+                for ($i=0; $i < $count ; $i++) { 
+                    $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->delete();
+                }
+                return redirect('/userdashboard');
+            }
+           
         } else {
-            return redirect()->back()->with('failed', 'Failed! Please Enter Valid Credential');
+          
+            $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
+            $count = count($total_attempt);
+            if($count >= 3){
+                return redirect()->back()->with('message', 'Your Account Has Been Blocked');
+            }
+            else{
+                $log = new LoginLog;
+                $log->status = 'failed';
+                $log->logtime = Carbon::now();
+                $log->ip = $ip;
+                $log->email = $email;
+                $log->save();
+                $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
+                $count = count($total_attempt);
+                $left = 3 - $count;
+                if($left == 0){
+                    return redirect()->back()->with('message', 'Your Account Has Been Blocked');
+                }
+                return redirect()->back()->with('message', ''.$left.' Attempt Remaining!');
+            }
+
+            
         }
     }
 }
