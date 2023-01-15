@@ -14,7 +14,8 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.3",
-        "mews/captcha": "^3.2"
+        "mews/captcha": "^3.2",
+        "orhanerday/open-ai": "^3.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

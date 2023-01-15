@@ -7,6 +7,7 @@ use App\Models\LoginLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use DateTime;
 
 use Illuminate\Http\Request;
 
@@ -95,10 +96,10 @@ class LoginController extends Controller
         $to = Carbon::createFromFormat('Y-m-d H:s:i', $last_time);
         $from = Carbon::createFromFormat('Y-m-d H:s:i', $now_time);
   
-        $diff_in_hours = $to->diffInMinutes($from);
+        $diff_in_minute = $to->diffInMinutes($from);
 
-        //dd($diff_in_hours);
-        if($diff_in_hours >= 3){
+        //dd($diff_in_minute);
+        if($diff_in_minute >= 3){
             $total_attempt = LoginLog::where(['ip'=>$ip,'email'=>$email])->get();
             $count = count($total_attempt);
             for ($i=0; $i < $count ; $i++) { 
@@ -107,8 +108,8 @@ class LoginController extends Controller
             return redirect()->back()->with('success', 'Your Account Has Been UnBlocked Now');
         }
         else{
-            $wait = 3 - $diff_in_hours;
-            return redirect()->back()->with('message', 'Your Account Bloked Kindly Wait For '.$wait.' Minute ');
+            $wait = 3 - $diff_in_minute;
+            return redirect()->back()->with(['message'=>'Your Account Bloked Kindly Wait For '.$wait.' Minute']);
         }
 
     }
@@ -145,6 +146,7 @@ class LoginController extends Controller
                 $log = new LoginLog;
                 $log->status = 'failed';
                 $log->logtime = Carbon::now();
+                $log->expire_at = Carbon::now()->addMinute(3);
                 $log->ip = $ip;
                 $log->email = $email;
                 $log->save();
@@ -152,6 +154,8 @@ class LoginController extends Controller
                 $count = count($total_attempt);
                 $left = 3 - $count;
                 if($left == 0){
+                    // session()->put('last_time',$log->logtime);
+                    // session()->put('expire_time',$log->expire_at);
                     return redirect()->back()->with('message', 'Your Account Has Been Blocked');
                 }
                 return redirect()->back()->with('message', ''.$left.' Attempt Remaining!');

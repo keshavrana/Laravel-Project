@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AiController;
 
 
 /*
@@ -40,3 +41,6 @@ Route::post('/updateuser/{id}',[UserController::class,'updateUser']);
 Route::get('/userlist',[UserController::class,'userlist']);
 
 Route::get('/collectiveform',[UserController::class,'collectiveform']);
+
+Route::get('/openai',[AiController::class,'openaiview']);
+Route::post('/airesult',[AiController::class,'airesult']);

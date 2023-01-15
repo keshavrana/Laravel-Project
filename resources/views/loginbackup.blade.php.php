@@ -35,14 +35,14 @@
                                             </a>
                                         </div>
                                         <h5 class="text-muted text-uppercase py-3 font-16">Sign In</h5>
-                                        {{-- <span id="time"></span>
+                                        <span id="time"></span>
                                         <br>
                                         @php
                                             $start = session()->get('last_time');
                                             $expire_time = session()->get('expire_time');
                                         @endphp
                                         <input type="text" id="start" value="{{$start}}">
-                                        <input type="text" id="end" value="{{$expire_time}}"> --}}
+                                        <input type="text" id="end" value="{{$expire_time}}">
                                         @if(Session::has('message'))
                                             <span class="text-danger">{{Session::get('message')}}</span>
                                         @endif
@@ -171,6 +171,47 @@
                 toastr.error('{{ Session::get('failed') }}');
             @endif
         });
+
+        
+
+        function diff_minutes(dt2, dt1) 
+            {
+                var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+                diff /= 60;
+                return Math.abs(Math.round(diff));
+            }
+
+            dt1 = new Date();
+            dt2 = new Date($('#end').val());
+            var time = diff_minutes(dt1,dt2);
+            $('#time').html(time);
+            console.log(time);
+
+            if(isNaN(time)){
+            }
+            else{
+                var second = 59;
+                var minutes = time-1;
+
+                var timer = setInterval(() => {
+                    if(minutes == 0 && second == 0){
+                        clearInterval(timer);
+                        $('#time').html('');
+                        $('#start').val('');
+                        $('#end').val('');
+                    }
+                    if(second <=0 ){
+                        minutes--;
+                        second = 60;
+                    }
+                $('#time').html(minutes+':'+second + ' Left Time');
+                    second--;
+                
+                }, 1000);
+            }
+
+          
+
     </script>
         
     </body>

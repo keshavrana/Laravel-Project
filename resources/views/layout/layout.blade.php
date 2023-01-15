@@ -360,6 +360,13 @@
                             </ul>
                         </li>
 
+                        <li>
+                            <a href="/openai">
+                                <i class="mdi mdi-view-dashboard"></i>
+                                <span> Open AI </span>
+                            </a>
+                        </li>
+
                         <li class="menu-title mt-2">Components</li>
 
                         <li>
