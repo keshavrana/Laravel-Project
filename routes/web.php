@@ -44,3 +44,6 @@ Route::get('/collectiveform',[UserController::class,'collectiveform']);
 
 Route::get('/openai',[AiController::class,'openaiview']);
 Route::post('/airesult',[AiController::class,'airesult']);
+Route::get('/ajaxopenai',[AiController::class,'ajaxopenai']);
+Route::post('/ajaxaireq',[AiController::class,'ajaxaireq']);
+Route::get('/test',[AiController::class,'testing']);

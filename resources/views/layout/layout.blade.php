@@ -19,7 +19,7 @@
 
     {{-- Datatables Here --}}
     <link href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-        
+
     <link href="{{ asset('assets/libs/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/select.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -29,7 +29,8 @@
         #navbarcolor {
             background-color: #98d8d3;
         }
-        #pagetitle{
+
+        #pagetitle {
             background-color: lightsteelblue;
             border: 3px solid grey;
         }
@@ -67,8 +68,9 @@
                         $lan = session()->get('lang');
                         
                     @endphp
-                    <option value="{{ url('/userdashboard/hi') }}" {{$lan == 'hi' ? 'selected' : ''}}>Hindi</option>
-                    <option value="{{ url('/userdashboard/en') }}" {{$lan == 'en' ? 'selected' : ''}}>English</option>
+                    <option value="{{ url('/userdashboard/hi') }}" {{ $lan == 'hi' ? 'selected' : '' }}>Hindi</option>
+                    <option value="{{ url('/userdashboard/en') }}" {{ $lan == 'en' ? 'selected' : '' }}>English
+                    </option>
                 </select>
 
                 <li class="dropdown notification-list">
@@ -361,10 +363,15 @@
                         </li>
 
                         <li>
-                            <a href="/openai">
-                                <i class="mdi mdi-view-dashboard"></i>
-                                <span> Open AI </span>
+                            <a href="javascript: void(0);">
+                                <i class="mdi mdi-google-pages"></i>
+                                <span>Open AI</span>
+                                <span class="menu-arrow"></span>
                             </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="/openai">Post Open AI</a></li>
+                                <li><a href="/ajaxopenai">Ajax Open AI</a></li>
+                            </ul>
                         </li>
 
                         <li class="menu-title mt-2">Components</li>
