@@ -284,7 +284,7 @@
 <body>
     <div class="container-fluid h-100">
         <div class="row justify-content-center h-100">
-            <div class="col-md-8 col-xl-6 chat">
+            <div class="col-md-8 col-xl-7 chat">
                 <div class="card">
                     <div class="card-header msg_head">
                         <div class="d-flex bd-highlight">
@@ -293,19 +293,15 @@
                                 <span class="online_icon"></span>
                             </div>
                             <div class="user_info">
-                                <span>Chat with AI Robot</span>
-                                <p>Developed By Keshav Rana</p>
-                            </div>
-                            <div class="video_cam">
-                                <span><i class="fas fa-video"></i></span>
-                                <span><i class="fas fa-phone"></i></span>
+                                <span>Chat With Artificial intelligence (AI) </span>
+                                <p>Design & Developed By Keshav Rana</p>
                             </div>
                         </div>
                     </div>
                     <div class="card-body msg_card_body">
                         <div class="d-flex justify-content-start mb-4">
-                            <div class="msg_cotainer">
-                                Hi, Welcome Keshav Rana How Can I Help You Today.
+                            <div class="msg_cotainer" id="welcome_msg" style="display:none;">
+                                Hi, Welcome Keshav Rana How Can I Help You Today ?.
                                 <span class="msg_time">{{ date('h:i') }} Today</span>
                             </div>
                         </div>
@@ -314,6 +310,10 @@
                             {{-- <div class="msg_cotainer_send" id="user_admin">
                                 <span class="msg_time_send">{{ date('h:i') }} Today</span>
                             </div> --}}
+                        </div>
+                        <div id="myDiv">
+                            <img id="loading-image" class="rounded-circle user_img"
+                                src="{{ asset('assets/images/Hourglass.gif') }}" style="display:none;" />
                         </div>
                         <div id="openaians">
 
@@ -347,6 +347,14 @@
 
 <script>
     //user_admin
+
+
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#welcome_msg').show();
+        }, 2000);
+    });
+
     $('.send_btn').click(function(e) {
         $('#user_admin').html('');
         $('#openaians').html('');
@@ -371,9 +379,16 @@
                 type: 'POST',
                 url: "{{ url('/ajaxaireq') }}",
                 data: params,
+                beforeSend: function() {
+                    $("#loading-image").show();
+                },
                 success: function(data) {
                     console.log(data.org_data);
-                    $('#openaians').append('<div class="d-flex justify-content-start mb-4"><div class="msg_cotainer">'+data.org_data+'<span class="msg_time">'+ datetime +' Today</span></div></div>');
+                    $('#openaians').append(
+                        '<div class="d-flex justify-content-start mb-4"><div class="msg_cotainer">' +
+                        data.org_data + '<span class="msg_time">' + datetime +
+                        ' Today</span></div></div>');
+                    $("#loading-image").hide();
                 },
             });
 
